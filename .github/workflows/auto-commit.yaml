@@ -2,7 +2,7 @@ name: Auto Commit随机内容
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天凌晨执行一次（示例）
+    - cron: '0 0 0 1  * *'  # 每天凌晨执行一次（示例）
   workflow_dispatch:      # 允许手动触发
 
 jobs:
