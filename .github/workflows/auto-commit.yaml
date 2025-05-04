@@ -1,0 +1,31 @@
+name: Auto Commit随机内容
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天凌晨执行一次（示例）
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 生成随机内容
+        run: |
+          # 生成随机UUID作为内容
+          content=$(uuidgen)
+          echo "$content" > random-content.txt
+          
+          # 或者生成随机Base64字符串（16字节）
+          # content=$(head -c 16 /dev/urandom | base64)
+          # echo "$content" > random-content.txt
+
+      - name: 自动提交代码
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add random-content.txt
+          git commit -m "自动提交随机内容: $content"  # 提交信息包含随机内容
+          git push
